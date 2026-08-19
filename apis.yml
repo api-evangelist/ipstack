@@ -14,7 +14,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ipstack.pn
 name: IPstack
 description: "Locate and identify website visitors by IP address"
 url: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-05-28'
 modified: '2026-05-28'
 x-source: public-apis/public-apis
