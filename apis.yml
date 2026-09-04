@@ -23,37 +23,48 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ipstack.png
 name: IPstack
-description: "Locate and identify website visitors by IP address"
+description: Locate and identify website visitors by IP address
 url: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
 specificationVersion: '0.23'
 created: '2026-05-28'
 modified: '2026-05-28'
 x-source: public-apis/public-apis
-x-category: "Geocoding"
+x-category: Geocoding
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
 tags:
-  - Geocoding
-  - Public APIs
+- Geocoding
+- Public APIs
 apis:
-  - name: IPstack
-    description: "Locate and identify website visitors by IP address"
-    humanURL: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-    baseURL: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-    tags:
-      - Geocoding
-    properties:
-      - type: Documentation
-        url: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-common:
-  - type: DomainSecurity
-    url: security/ipstack-domain-security.yml
-  - type: Website
+- name: IPstack
+  description: Locate and identify website visitors by IP address
+  humanURL: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+  baseURL: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+  tags:
+  - Geocoding
+  properties:
+  - type: Documentation
     url: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-  - type: PublicAPIsListing
-    url: https://github.com/public-apis/public-apis
-  - url: https://blog.apilayer.com/feed/
-    type: Blog
+- name: ipstack
+  description: Locate and identify website visitors by IP address
+  humanURL: https://ipstack.com/
+  baseURL: https://ipstack.com/
+  tags:
+  - Geocoding
+  properties:
+  - type: Documentation
+    url: https://ipstack.com/
+common:
+- type: DomainSecurity
+  url: security/ipstack-domain-security.yml
+- type: Website
+  url: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+- type: PublicAPIsListing
+  url: https://github.com/public-apis/public-apis
+- url: https://blog.apilayer.com/feed/
+  type: Blog
+- type: Website
+  url: https://ipstack.com/
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
