@@ -23,48 +23,124 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ipstack.png
 name: IPstack
-description: Locate and identify website visitors by IP address
-url: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+description: >-
+  IPstack is an IP geolocation API from APILayer, an Idera, Inc. brand. A single GET
+  request against api.ipstack.com resolves an IPv4 or IPv6 address into more than 100
+  fields — country, region and city, latitude and longitude, time zone, local currency,
+  ISP, ASN and connection type — plus an optional security module that flags proxies,
+  VPNs, Tor exit nodes and known threat actors. Standard, bulk (up to 50 addresses) and
+  requester lookups are offered in JSON, XML and JSONP. The same data is exposed to agents
+  through APILayer's hosted MCP server at mcp.apilayer.com, which publishes RFC 9728
+  protected-resource metadata and an OAuth authorization server at auth.apilayer.com.
+url: https://ipstack.com/
 specificationVersion: '0.23'
 created: '2026-05-28'
-modified: '2026-05-28'
+modified: '2026-09-04'
 x-source: public-apis/public-apis
 x-category: Geocoding
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
+x-parent-company: apilayer
 tags:
 - Geocoding
+- IP Geolocation
+- Location
+- Threat Intelligence
+- Networking
+- MCP
 - Public APIs
 apis:
-- name: IPstack
-  description: Locate and identify website visitors by IP address
-  humanURL: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-  baseURL: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-  tags:
-  - Geocoding
-  properties:
-  - type: Documentation
-    url: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-- name: ipstack
-  description: Locate and identify website visitors by IP address
+- name: ipstack REST API
+  description: Real-time IP geolocation lookup returning 100+ data fields per IP — country,
+    region and city, latitude/longitude, timezone, currency, connection and ASN details,
+    plus security signals for VPN, proxy and threat detection.
   humanURL: https://ipstack.com/
-  baseURL: https://ipstack.com/
+  baseURL: https://api.ipstack.com
   tags:
   - Geocoding
+  - IP Geolocation
   properties:
   - type: Documentation
-    url: https://ipstack.com/
+    url: https://docs.apilayer.com/ipstack/docs/api-documentation
+    note: >-
+      Verified 2026-09-04: HTTP 302 into a SmartBear/SwaggerHub login loop for anonymous
+      clients. The reference exists but is not publicly readable. Retained as the
+      provider's official reference, flagged as gated rather than removed.
+  - type: GettingStarted
+    url: https://ipstack.com/how-to-use-ipstack-api/
+  - type: PostmanCollection
+    url: https://www.postman.com/apilayer/apilayer/collection/1jn3xlj/ipstack
+  - type: SDKs
+    url: https://ipstack.com/sdk/
+- name: ipstack MCP Server
+  description: Hosted MCP server exposing the ipstack geolocation lookups as agent-callable
+    tools.
+  humanURL: https://ipstack.com/mcp/
+  baseURL: https://mcp.apilayer.com/mcp
+  tags:
+  - Geocoding
+  - MCP
+  properties:
+  - type: MCPServer
+    url: https://mcp.apilayer.com/mcp
+  - type: MCPServer
+    url: mcp/ipstack-mcp.yml
+  - type: Documentation
+    url: https://docs.apilayer.com/ipstack/docs/mcp-user-guide
 common:
 - type: DomainSecurity
   url: security/ipstack-domain-security.yml
-- type: Website
-  url: https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
 - type: PublicAPIsListing
   url: https://github.com/public-apis/public-apis
 - url: https://blog.apilayer.com/feed/
   type: Blog
 - type: Website
   url: https://ipstack.com/
+- type: LLMsTxt
+  url: https://ipstack.com/llms.txt
+- type: WellKnown
+  url: well-known/ipstack-well-known.yml
+- type: Packages
+  url: packages/ipstack-packages.yml
+- type: SDKs
+  url: packages/ipstack-packages.yml
+- type: Authentication
+  url: authentication/ipstack-authentication.yml
+- type: OAuthScopes
+  url: scopes/ipstack-scopes.yml
+- type: Conventions
+  url: conventions/ipstack-conventions.yml
+- type: ErrorCatalog
+  url: errors/ipstack-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/ipstack-lifecycle.yml
+- type: StatusPage
+  url: https://ipstack.com/api-status/
+- type: Conformance
+  url: conformance/ipstack-conformance.yml
+- type: Plans
+  url: plans/ipstack-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/ipstack-rate-limits.yml
+- type: Pricing
+  url: https://ipstack.com/pricing/
+- type: SignUp
+  url: https://dashboard.ipstack.com/signup/free
+- type: Login
+  url: https://ipstack.com/login
+- type: Support
+  url: https://ipstack.com/contact/
+- type: GitHubOrganization
+  url: https://github.com/apilayer
+- type: TermsOfService
+  url: https://www.ideracorp.com/legal/APILayer
+- type: PrivacyPolicy
+  url: https://www.ideracorp.com/Legal/PrivacyPolicy
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v3
