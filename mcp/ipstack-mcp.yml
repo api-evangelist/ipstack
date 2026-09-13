@@ -1,0 +1,96 @@
+generated: '2026-09-04'
+method: searched
+source: https://ipstack.com/mcp/ (provider MCP page, HTTP 200) and https://blog.apilayer.com/ipstack-mcp-server-give-your-ai-tools-real-ip-geolocation-data/
+  (provider blog, HTTP 200), confirmed by direct probe of https://mcp.apilayer.com/mcp (HTTP 401, JSON-RPC
+  error -32001 "Authentication required") and of https://mcp.apilayer.com/.well-known/oauth-protected-resource
+  (HTTP 200).
+name: IPstack MCP Server
+description: APILayer operates one hosted MCP server for its whole API suite at https://mcp.apilayer.com/mcp;
+  IPstack's geolocation lookups are exposed through it and scoped by the OAuth scope api:ipstack. The
+  server is real and reachable but every method — including tools/list and initialize — is authentication-gated,
+  so the live inputSchema for each tool could not be read anonymously.
+status: published
+deployment:
+  mode: both
+  endpoint: https://mcp.apilayer.com/mcp
+  install: npx @apilayer/mcp-server
+  package: https://www.npmjs.com/package/@apilayer/mcp-server
+  auth: oauth
+  verified: probed
+  probe_prior: (never probed)
+  probe: gated
+  probe_why: RFC 9728 challenge on the MCP path only
+  checked: '2026-09-11'
+  source: claimed-backlog re-probe 2026-09-11
+transport: streamable-http
+authentication:
+  scheme: Bearer
+  header: 'Authorization: Bearer <APILAYER token>'
+  oauth:
+    protected_resource_metadata: https://mcp.apilayer.com/.well-known/oauth-protected-resource
+    authorization_server: https://auth.apilayer.com
+    scopes:
+    - mcp:read
+    - api:ipstack
+    challenge_header: 'WWW-Authenticate: Bearer resource_metadata="https://mcp.apilayer.com/.well-known/oauth-protected-resource"'
+  note: 'The provider''s own client-config examples show a static API key passed as a bearer token (Authorization:
+    Bearer <APILAYER_MCP_TOKEN>) for the remote endpoint and APILAYER_ACCESS_KEY as an environment variable
+    for the stdio package. The endpoint itself additionally advertises full RFC 9728 / RFC 8414 OAuth
+    discovery.'
+x-evidence:
+  probed: '2026-09-04'
+  tools_list:
+    url: https://mcp.apilayer.com/mcp
+    method: POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}
+    http_status: 401
+    body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authentication required"},"id":null}'
+  initialize:
+    url: https://mcp.apilayer.com/mcp
+    http_status: 401
+    body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authentication required"},"id":null}'
+  npm_package:
+    url: https://registry.npmjs.org/@apilayer%2Fmcp-server
+    http_status: 404
+    note: 'The stdio install command the provider publishes (npx @apilayer/mcp-server) does not resolve
+      on the public npm registry — the package is absent as of this probe. Recorded as an honest gap,
+      not corrected: the install line is quoted verbatim from the vendor.'
+tools:
+  note: Tool names and descriptions below are taken from IPstack's own MCP page and blog post, NOT from
+    a live tools/list response. Parameter schemas need authenticated introspection and are deliberately
+    not asserted here.
+  method: searched
+  items:
+  - name: standard_lookup
+    description: Geolocate a single IPv4 or IPv6 address in real time — country, region, city, latitude/longitude,
+      timezone, currency, connection and ASN metadata.
+    parameters_named_in_docs:
+    - ip
+    - security
+    backing_rest: GET https://api.ipstack.com/{ip}
+    confidence: medium
+    source: https://blog.apilayer.com/ipstack-mcp-server-give-your-ai-tools-real-ip-geolocation-data/
+  - name: bulk lookup
+    description: Resolve up to 50 IP addresses in a single batched request.
+    parameters_named_in_docs: []
+    backing_rest: GET https://api.ipstack.com/{ip1,ip2,...}
+    confidence: low
+    note: Described on https://ipstack.com/mcp/ as a capability of the server; no canonical tool name
+      is published. Name NOT invented — recorded as the docs phrase it.
+    source: https://ipstack.com/mcp/
+  - name: requester lookup
+    description: Geolocate the calling client's own IP address.
+    parameters_named_in_docs: []
+    backing_rest: GET https://api.ipstack.com/check
+    confidence: low
+    note: ipstack.com/mcp/ states the server "supports all ipstack endpoints", which includes the requester
+      check. No canonical tool name is published.
+    source: https://ipstack.com/mcp/
+clients_supported:
+- VS Code Copilot
+- Cursor
+- Windsurf
+- Claude Desktop
+- Cline
+docs:
+- https://ipstack.com/mcp/
+- https://docs.apilayer.com/ipstack/docs/mcp-user-guide
