@@ -1,0 +1,70 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://ipstack.com/api-status/ (HTTP 200), https://ipstack.com/faq/ (HTTP 200),
+  https://ipstack.com/llms.txt (HTTP 200), https://www.ideracorp.com/legal/APILayer
+  (HTTP 200). No OpenAPI is published, so no deprecated operations could be derived.
+name: IPstack lifecycle, versioning and status
+description: >-
+  IPstack runs an unversioned API — there is no /v1 segment in the base URL, no version
+  header, and no published versioning or deprecation policy. Availability is reported on a
+  first-party status dashboard rather than a Statuspage/Atlassian instance.
+versioning:
+  scheme: none
+  base_url: https://api.ipstack.com
+  in_path: false
+  in_header: false
+  note: >-
+    The base URL carries no version segment and the docs name no version parameter. A
+    breaking change to the response shape has nowhere to be signalled.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy, Sunset header, Deprecation header or end-of-life schedule is
+    published on any public IPstack or APILayer surface. Nothing is asserted about how
+    changes are communicated because nothing is published.
+status_page:
+  url: https://ipstack.com/api-status/
+  type: first-party
+  external_provider: null
+  http_status: 200
+  monitors:
+    - name: Standard IP Lookup
+      availability: 100.00%
+      latency_ms: 449.02
+    - name: Requester IP Lookup
+      availability: 100.00%
+      latency_ms: 461.15
+    - name: Bulk IP Lookup
+      availability: 100.00%
+      latency_ms: 483.28
+  note: >-
+    Live per-endpoint latency, pass rate and error rate are shown. No incident history and
+    no subscribe/RSS/webhook feed is offered, so an agent cannot be notified of an outage —
+    only poll the page.
+  observed: '2026-09-04'
+sla:
+  published: true
+  uptime_claim: >-
+    "The IPstack API has had an uptime of 99.99% throughout the last 12 months."
+  source: https://ipstack.com/faq/
+  contractual: false
+  note: >-
+    A historical uptime statement on an FAQ page, not a contractual SLA. llms.txt separately
+    describes the infrastructure as "99.9%-uptime", which does not match the FAQ's 99.99%.
+data_freshness:
+  claim: Up to 24 database updates per day.
+  source: https://ipstack.com/faq/
+quota_notifications:
+  - 75% of monthly quota (email + dashboard)
+  - 90% of monthly quota (email + dashboard)
+  - 100% of monthly quota (email + dashboard)
+legal:
+  terms: https://www.ideracorp.com/legal/APILayer
+  privacy: https://www.ideracorp.com/Legal/PrivacyPolicy
+  note: >-
+    Both legal documents are served by Idera, Inc. — APILayer/IPstack's parent — not by
+    ipstack.com. ipstack.com/privacy/ 301s to the Idera privacy policy.

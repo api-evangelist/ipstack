@@ -1,0 +1,73 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  Live unauthenticated requests to https://api.ipstack.com/ on 2026-09-04 (three distinct
+  error envelopes observed verbatim) plus the error semantics described at
+  https://ipstack.com/llms.txt and https://ipstack.com/how-to-use-ipstack-api/. No OpenAPI
+  is published, so nothing here is derived from a 4xx/5xx response object.
+name: IPstack error catalog
+format: vendor-envelope
+rfc9457: false
+description: >-
+  IPstack does NOT use RFC 9457 problem+json, and more importantly it does not use HTTP
+  status codes to signal failure. A missing key, an invalid key and a malformed IP all
+  return HTTP 200 with content-type application/json and a body whose success field is
+  false. An agent or client that branches on response.ok will treat every one of these as
+  a success.
+envelope:
+  shape: '{"success": false, "error": {"code": <int>, "type": "<slug>", "info": "<sentence>"}}'
+  success_flag: success
+  code_field: error.code
+  type_field: error.type
+  message_field: error.info
+  content_type: application/json; Charset=UTF-8
+  http_status_on_error: 200
+problem_types:
+  - type: missing_access_key
+    code: 101
+    http_status: 200
+    title: No API access key supplied
+    detail: >-
+      "You have not supplied an API Access Key. [Required format:
+      access_key=YOUR_ACCESS_KEY]"
+    remediation: Append ?access_key=YOUR_ACCESS_KEY to the request URL.
+    method: probed
+    evidence: 'GET https://api.ipstack.com/134.201.250.155 -> HTTP 200'
+  - type: invalid_access_key
+    code: 101
+    http_status: 200
+    title: API access key is not valid
+    detail: >-
+      "You have not supplied a valid API Access Key. [Technical Support:
+      support@apilayer.com]"
+    remediation: Check the key in the dashboard; keys are per-account, not per-product.
+    method: probed
+    evidence: >-
+      GET https://api.ipstack.com/134.201.250.155?access_key=<invalid> -> HTTP 200
+    note: >-
+      Shares error.code 101 with missing_access_key. The numeric code is therefore NOT a
+      unique identifier; only error.type distinguishes the two conditions.
+  - type: '404 route'
+    code: null
+    http_status: 302
+    title: Bare host redirect
+    detail: >-
+      GET https://api.ipstack.com/ (no path) answers HTTP 302 with an nginx body rather
+      than a JSON error.
+    method: probed
+observations:
+  - >-
+    A malformed IP path segment with an invalid key returns invalid_access_key, not an
+    IP-validation error — authentication is evaluated before input validation, so an agent
+    cannot distinguish a bad address from a bad key until the key is valid.
+  - >-
+    HEAD https://api.ipstack.com/{ip} returns HTTP 403 Forbidden with a 93-byte
+    text/html body. Only GET is served.
+  - >-
+    No Retry-After, no rate-limit error type and no quota-exhaustion envelope could be
+    observed anonymously; those require a valid key and are not documented publicly.
+incomplete: true
+incomplete_reason: >-
+  The full numeric error-code table (the historical 101/104/105/301/302/303/104-style list)
+  lives only in the API reference at docs.apilayer.com, which 302s anonymous clients into a
+  SmartBear login loop. Only the codes actually observed on the wire are recorded here.

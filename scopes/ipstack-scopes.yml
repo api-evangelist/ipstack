@@ -1,0 +1,40 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  https://auth.apilayer.com/.well-known/oauth-authorization-server (HTTP 200) and
+  https://mcp.apilayer.com/.well-known/oauth-protected-resource (HTTP 200). Both fetched
+  anonymously on 2026-09-04 and saved verbatim under well-known/. derive-oauth-scopes.py
+  produced nothing because no OpenAPI with oauth2 securitySchemes is published.
+name: IPstack / APILayer OAuth scopes
+description: >-
+  The APILayer authorization server publishes its scope list in discovery. Two of the five
+  scopes are product scopes and one of them names IPstack explicitly — api:ipstack — which
+  is also the ownership proof that mcp.apilayer.com is IPstack's own agent surface and not
+  a sibling product's.
+issuer: https://auth.apilayer.com
+resource: https://mcp.apilayer.com/mcp
+scopes:
+  - name: openid
+    description: Standard OpenID Connect scope; requests an ID token.
+    source: authorization-server metadata scopes_supported
+  - name: offline
+    description: Requests a refresh token (Ory/Hydra-style alias of offline_access).
+    source: authorization-server metadata scopes_supported
+  - name: offline_access
+    description: Standard OIDC scope requesting a refresh token for long-lived agent sessions.
+    source: authorization-server metadata scopes_supported
+  - name: mcp:read
+    description: >-
+      Read access through the APILayer MCP server. Advertised by the protected-resource
+      document at mcp.apilayer.com as one of the two scopes that endpoint accepts.
+    source: both authorization-server and protected-resource metadata
+  - name: api:ipstack
+    description: >-
+      Access to the IPstack product surface through an APILayer token. The only
+      product-named scope in the discovery document.
+    source: both authorization-server and protected-resource metadata
+docs: null
+note: >-
+  APILayer publishes no human-readable scopes/permissions reference page; the scope list
+  exists only in the machine-readable discovery documents. That is recorded as an honest
+  gap rather than filled in.

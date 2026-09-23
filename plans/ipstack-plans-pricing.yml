@@ -1,0 +1,115 @@
+generated: '2026-09-04'
+method: searched
+source: https://ipstack.com/pricing/ (HTTP 200, fetched 2026-09-04)
+name: IPstack plans and pricing
+description: >-
+  Five published tiers, self-serve up to 2,000,000 requests/month, with a per-call overage
+  rate printed on every paid tier — unusually transparent. The two capabilities an agent
+  most likely wants (bulk lookup and the security/threat module) are gated to the top
+  self-serve tier.
+currency: USD
+billing_periods:
+  - monthly
+  - yearly
+annual_discount: Up to 15% off with yearly billing
+plan_count: 5
+plans:
+  - name: Free
+    price: 0
+    currency: USD
+    period: month
+    quota:
+      requests: 100
+      period: month
+    overage: null
+    features:
+      - SSL Encryption
+      - Location Module
+    support: Standard
+    commercial_use: false
+  - name: Basic
+    price: 12.99
+    currency: USD
+    period: month
+    quota:
+      requests: 50000
+      period: month
+    overage:
+      per_call: 0.0010392
+      currency: USD
+    features:
+      - SSL Encryption
+      - Location Module
+      - Time Zone Module
+      - Connection Module
+      - Currency Module
+      - Commercial Use
+    excludes:
+      - Bulk Endpoint
+      - Security Module
+    support: Standard
+  - name: Professional
+    price: 59.99
+    currency: USD
+    period: month
+    quota:
+      requests: 500000
+      period: month
+    overage:
+      per_call: 0.00047992
+      currency: USD
+    features:
+      - SSL Encryption
+      - Location Module
+      - Time Zone Module
+      - Connection Module
+      - Currency Module
+      - Commercial Use
+    excludes:
+      - Bulk Endpoint
+      - Security Module
+    support: Standard
+  - name: Professional Plus
+    price: 99.99
+    currency: USD
+    period: month
+    quota:
+      requests: 2000000
+      period: month
+    overage:
+      per_call: 0.00019998
+      currency: USD
+    features:
+      - SSL Encryption
+      - Location Module
+      - Time Zone Module
+      - Connection Module
+      - Currency Module
+      - Bulk Endpoint
+      - Security Module
+      - Commercial Use
+    support: Standard
+    note: Marked "MOST POPULAR" on the pricing page.
+  - name: Custom
+    price: null
+    currency: USD
+    period: month
+    quota:
+      requests: null
+      period: month
+    contact_sales: true
+    note: For requirements above 2,000,000 requests/month.
+add_ons:
+  - name: Platinum Support
+    price_range:
+      min: 479.88
+      max: 719.88
+      currency: USD
+      period: year
+    description: >-
+      Optional annual add-on, priced by plan tier. Dedicated account team, priority
+      support and quarterly briefings.
+quota_notifications:
+  - 75%
+  - 90%
+  - 100%

@@ -1,0 +1,29 @@
+# IPstack
+
+> IPstack is a real-time IP geolocation API returning 100+ data fields per lookup: location (country, region, city, latitude/longitude), timezone, local currency, connection details (ISP, ASN, connection type), and security signals that flag VPNs, proxies, and threats. It covers 2M+ locations and 200K+ cities worldwide, supports IPv4 and IPv6, returns JSON or XML within milliseconds, and runs on 99.9%-uptime infrastructure with 256-bit SSL and data sourced through ISP partnerships. Used by companies including Microsoft, Airbnb, Samsung, Activision, and HubSpot.
+
+A free API key is available at https://ipstack.com/signup/free - no credit card required. A single lookup is one GET request: api.ipstack.com/{IP_ADDRESS}?access_key=YOUR_KEY. Three endpoints are available: Standard Lookup (single IP), Bulk Lookup (multiple IPs per request), and Requester Lookup (the calling IP). Optional parameters enable hostname resolution, the security module, response-field filtering, output language, and JSONP callbacks.
+
+## Getting Started
+- [IPstack Homepage](https://ipstack.com/): Real-time IP geolocation API - locate IPs, detect threats, access location, ISP, and timezone data
+- [How to Use the IPstack API](https://ipstack.com/how-to-use-ipstack-api/): Step-by-step integration walkthrough from signup to first request
+- [API Documentation](https://ipstack.com/documentation/): Full reference - endpoints, parameters, response objects, errors, and code examples
+- [Free API Key Signup](https://ipstack.com/signup/free): Create a free account - no credit card required
+- [Login](https://ipstack.com/login): Access your dashboard, API key, and usage statistics
+- [Pricing](https://ipstack.com/pricing/): Free, Professional, and Enterprise plan tiers with request volumes and features
+
+## Tools
+- [Official SDKs](https://ipstack.com/sdk/): Ready-to-use SDKs for quick API integration
+- [MCP Server](https://ipstack.com/mcp/): Use IPstack from AI assistants via the Model Context Protocol
+- [API Status](https://ipstack.com/api-status/): Real-time updates on API performance and uptime
+
+## Resources
+- [Geolocation API Guide](https://ipstack.com/geolocation-api/): What a geolocation API is and how IPstack implements it
+- [Real-Time IP Lookup API](https://ipstack.com/real-time-ip-lookup-api/): Live IP lookup capabilities explained
+- [Free IP API](https://ipstack.com/free-ip-api/): What the free plan includes and how to use it
+- [JSON IP API](https://ipstack.com/json-ip-api/): Working with IPstack's JSON responses
+- [API Glossary](https://ipstack.com/api-glossary/): Definitions of geolocation and API terms
+- [FAQs](https://ipstack.com/faq/): Common questions on accuracy, request limits, plans, and integration
+
+## Support
+- [Contact Us](https://ipstack.com/contact/): Sales and technical support

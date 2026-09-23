@@ -1,0 +1,125 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  The discovery documents saved under well-known/ (all fetched anonymously on 2026-09-04),
+  the live 401 challenge from https://mcp.apilayer.com/mcp, and live error responses from
+  https://api.ipstack.com/. Nothing below is taken from a marketing claim.
+name: IPstack standards conformance
+description: >-
+  Everything IPstack conforms to sits on the OAuth/MCP side of the house, and it is
+  genuinely well done — RFC 9728 protected-resource metadata, RFC 8414 authorization-server
+  metadata, PKCE, dynamic client registration, a correct WWW-Authenticate challenge. The
+  REST API next to it conforms to nothing: no OpenAPI, no RFC 9457, no standard HTTP error
+  semantics.
+conformance:
+  - id: rfc9728
+    name: OAuth 2.0 Protected Resource Metadata
+    conforms: true
+    evidence: >-
+      https://mcp.apilayer.com/.well-known/oauth-protected-resource returns HTTP 200 with
+      resource, authorization_servers, scopes_supported and bearer_methods_supported.
+      Saved verbatim to well-known/ipstack-mcp-oauth-protected-resource.json.
+  - id: rfc8414
+    name: OAuth 2.0 Authorization Server Metadata
+    conforms: true
+    evidence: >-
+      https://auth.apilayer.com/.well-known/oauth-authorization-server returns HTTP 200
+      with issuer, authorization_endpoint, token_endpoint, jwks_uri, grant_types_supported
+      and scopes_supported.
+  - id: oidc-discovery
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence: >-
+      https://auth.apilayer.com/.well-known/openid-configuration returns HTTP 200 with
+      userinfo_endpoint, id_token_signing_alg_values_supported [RS256], claims_supported
+      and end_session_endpoint.
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: true
+    evidence: >-
+      authorization_code, client_credentials, refresh_token and device_code grants are
+      advertised; token, authorization and revocation endpoints are published.
+  - id: rfc7636
+    name: PKCE
+    conforms: true
+    evidence: 'code_challenge_methods_supported: ["S256"] in the authorization-server metadata.'
+  - id: rfc7591
+    name: OAuth 2.0 Dynamic Client Registration
+    conforms: true
+    evidence: 'registration_endpoint: https://auth.apilayer.com/oauth2/register'
+  - id: rfc8628
+    name: OAuth 2.0 Device Authorization Grant
+    conforms: true
+    evidence: >-
+      device_authorization_endpoint published and
+      urn:ietf:params:oauth:grant-type:device_code listed in grant_types_supported.
+  - id: rfc7009
+    name: OAuth 2.0 Token Revocation
+    conforms: true
+    evidence: 'revocation_endpoint: https://auth.apilayer.com/oauth2/revoke'
+  - id: rfc6750
+    name: OAuth 2.0 Bearer Token Usage
+    conforms: true
+    evidence: >-
+      The MCP endpoint's 401 carries WWW-Authenticate: Bearer with a resource_metadata
+      parameter; bearer_methods_supported is ["header"].
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    partial: true
+    evidence: >-
+      https://mcp.apilayer.com/mcp answers JSON-RPC 2.0 over HTTP with a well-formed
+      -32001 error object. Protocol version and tool schemas could not be read because
+      initialize is auth-gated (HTTP 401).
+  - id: llmstxt
+    name: llms.txt
+    conforms: true
+    evidence: >-
+      https://ipstack.com/llms.txt returns HTTP 200, text/plain, with the conventional
+      H1 / blockquote / H2-section structure. Saved to llms/ipstack-llms.txt.
+  - id: rfc9457
+    name: Problem Details for HTTP APIs
+    conforms: false
+    evidence: >-
+      Observed error bodies use a proprietary {"success":false,"error":{code,type,info}}
+      envelope with content-type application/json, not application/problem+json.
+  - id: http-status-semantics
+    name: Correct HTTP status semantics
+    conforms: false
+    evidence: >-
+      GET https://api.ipstack.com/{ip} with a missing or invalid key returns HTTP 200, not
+      401. Verified on 2026-09-04.
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence: >-
+      No OpenAPI is served from api.ipstack.com (every path answers the API's catch-all
+      error envelope), ipstack.com (404), apilayer.com (404) or api.apilayer.com (404). The
+      reference at docs.apilayer.com is a SwaggerHub portal that 302s anonymous clients
+      into a SmartBear login loop.
+  - id: rfc8594
+    name: Sunset header / deprecation signalling
+    conforms: false
+    evidence: No Sunset or Deprecation header observed and no deprecation policy published.
+  - id: security-txt
+    name: RFC 9116 security.txt
+    conforms: false
+    evidence: >-
+      404 on ipstack.com, apilayer.com and auth.apilayer.com; a catch-all API error body
+      on api.ipstack.com.
+domain_standard:
+  applicable: false
+  note: >-
+    IP geolocation has no adopted interchange standard for this pipeline to check against —
+    no OGC surface, no SCIM/OData/OpenRTB/HL7-class schema in this market. REWARD-ONLY
+    dimension, so nothing is invented to fill it. The response field set (country_code,
+    region_code, latitude, longitude, time_zone, connection.asn) is a vendor vocabulary; the
+    only recognised standards inside it are ISO 3166 country codes and ISO 4217 currency
+    codes, which are field values rather than a contract shape.
+compliance:
+  certifications_published: false
+  note: >-
+    No SOC 2, ISO 27001, PCI or HIPAA attestation is named on any public IPstack or APILayer
+    page, and probe-security-programs.py found no trust center and no vulnerability
+    disclosure programme. Legal terms and the privacy policy are served by the parent,
+    Idera, Inc., at https://www.ideracorp.com/legal/APILayer.

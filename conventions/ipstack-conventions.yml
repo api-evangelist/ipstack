@@ -1,0 +1,113 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  Live probes of https://api.ipstack.com/ and https://mcp.apilayer.com/mcp on 2026-09-04,
+  plus https://ipstack.com/llms.txt, https://ipstack.com/how-to-use-ipstack-api/ and
+  https://ipstack.com/faq/ (all HTTP 200). No OpenAPI is published.
+name: IPstack cross-cutting API conventions
+description: >-
+  IPstack is a READ-ONLY lookup API. Three GET endpoints, no writes, no resources to
+  create, update or delete. That single fact settles most of the runtime-semantics
+  dimensions below as not-applicable rather than absent — there is nothing to make
+  idempotent, nothing to rehearse and nothing to reverse.
+surface:
+  read_only: true
+  http_methods: [GET]
+  endpoints:
+    - 'GET https://api.ipstack.com/{ip}          # standard lookup'
+    - 'GET https://api.ipstack.com/{ip1},{ip2}   # bulk lookup, up to 50 IPs'
+    - 'GET https://api.ipstack.com/check         # requester lookup'
+  note: >-
+    HEAD returns HTTP 403. POST/PUT/PATCH/DELETE are advertised in the
+    access-control-allow-methods header but the API exposes no write operations.
+auth_style:
+  mechanism: apiKey
+  placement: query
+  parameter: access_key
+  see: authentication/ipstack-authentication.yml
+idempotency:
+  coverage: na
+  mechanism: none
+  header: null
+  scope: []
+  rationale: >-
+    The public surface is GET-only. GET is idempotent by definition and there is no
+    mutating operation for an Idempotency-Key to protect. This is `na`, not `none` — the
+    provider is not failing to ship replay protection for writes it does not have.
+reversibility:
+  grade: na
+  reversal_operations: []
+  window: null
+  rationale: >-
+    No write surface exists, so no action taken through this API can need taking back. An
+    agent calling IPstack cannot cause a state change at the provider.
+dry_run_mode:
+  supported: na
+  rationale: Read-only surface; every call is already a rehearsal.
+pagination:
+  style: none
+  rationale: >-
+    No collection endpoints. Bulk lookup takes an explicit comma-separated list of up to
+    50 IPs and returns exactly that many objects — a batch, not a page. No cursor, offset,
+    limit or link header is documented or observed.
+  batch_limit: 50
+field_selection:
+  supported: true
+  parameter: fields
+  description: >-
+    llms.txt documents "response-field filtering" as an optional parameter, letting a
+    caller trim the ~100-field response. Parameter name is documented in the gated
+    reference; the capability is stated publicly.
+  source: https://ipstack.com/llms.txt
+  confidence: medium
+output_formats:
+  - json
+  - xml
+  - jsonp
+jsonp:
+  supported: true
+  parameter: callback
+  source: https://ipstack.com/how-to-use-ipstack-api/
+localization:
+  supported: true
+  description: An optional output-language parameter is documented in llms.txt.
+  source: https://ipstack.com/llms.txt
+hostname_resolution:
+  supported: true
+  description: Optional hostname lookup module, off by default.
+  source: https://ipstack.com/llms.txt
+error_envelope:
+  shape: '{"success": false, "error": {"code": <int>, "type": "<slug>", "info": "<sentence>"}}'
+  http_status_on_error: 200
+  rfc9457: false
+  see: errors/ipstack-problem-types.yml
+  warning: >-
+    Errors are returned with HTTP 200. Any client or agent that treats a 2xx as success
+    will silently consume an error body as if it were geolocation data.
+request_tracing:
+  request_id_header: none
+  observed_response_headers:
+    - cache-control
+    - content-type
+    - access-control-allow-methods
+    - access-control-allow-origin
+    - x-blocked-at-loadbalancer
+  note: >-
+    No X-Request-Id, correlation id or trace header is returned. A caller reporting a
+    failure to support has no identifier to quote.
+rate_limit_signaling:
+  headers: none
+  see: rate-limits/ipstack-rate-limits.yml
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header was present on any observed
+    response. Quota state is only visible in the dashboard and in threshold emails.
+cors:
+  allow_origin: '*'
+  allow_methods: 'GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS'
+  note: >-
+    Fully open CORS means the access_key can be called from browser JavaScript — and will
+    therefore be readable by anyone who opens devtools. There is no documented
+    domain-restriction or referrer-lock mechanism on the public pages.
+versioning:
+  see: lifecycle/ipstack-lifecycle.yml
+  scheme: none

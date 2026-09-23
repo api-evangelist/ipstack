@@ -1,0 +1,113 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://ipstack.com/sdk/ (the provider's official SDK page, HTTP 200) plus direct
+  unauthenticated queries against registry.npmjs.org, pypi.org, rubygems.org and
+  repo.packagist.org. Every version/published pair below was read from the registry
+  metadata endpoint on 2026-09-04.
+name: IPstack client libraries
+description: >-
+  IPstack publishes exactly ONE official SDK — a JavaScript/npm client. Everything else
+  in the ecosystem is community-maintained. The single most useful currency signal here
+  is that the official SDK's last release (1.0.1, 2024-10-23) predates the MCP server the
+  company shipped in 2026 and predates the current API surface; the SDK has not been
+  touched in roughly two years.
+official_count: 1
+packages:
+  - name: apilayer-ipstack
+    registry: npm
+    url: https://www.npmjs.com/package/apilayer-ipstack
+    language: JavaScript
+    official: true
+    version: 1.0.1
+    published: '2024-10-23'
+    install: npm i apilayer-ipstack
+    maintainers:
+      - api-layer
+    source: >-
+      Named as "the official JavaScript SDK" on https://ipstack.com/sdk/ with the install
+      command npm i apilayer-ipstack; metadata read from
+      https://registry.npmjs.org/apilayer-ipstack (HTTP 200).
+    note: >-
+      The code sample on ipstack.com/sdk/ imports from "ipstack-sdk", not from
+      "apilayer-ipstack". registry.npmjs.org/ipstack-sdk returns 404 — the published sample
+      does not run as written. Recorded, not corrected.
+  - name: '@apilayer/ipstack'
+    registry: npm
+    url: https://www.npmjs.com/package/@apilayer/ipstack
+    language: JavaScript
+    official: true
+    version: 0.1.6
+    published: '2019-10-01'
+    maintainers:
+      - apilayer-p
+      - kayandra
+    source: https://registry.npmjs.org/@apilayer%2Fipstack (HTTP 200)
+    note: >-
+      Earlier first-party scoped package under the APILayer npm org; superseded by
+      apilayer-ipstack and not linked from the current SDK page. Last released 2019.
+  - name: '@apilayer/mcp-server'
+    registry: npm
+    url: https://www.npmjs.com/package/@apilayer/mcp-server
+    language: JavaScript
+    official: true
+    version: null
+    published: null
+    install: npx @apilayer/mcp-server
+    source: >-
+      Install command published verbatim by the provider at https://ipstack.com/mcp/ and
+      in https://blog.apilayer.com/ipstack-mcp-server-give-your-ai-tools-real-ip-geolocation-data/
+    note: >-
+      CHECKED, NOTHING TO RECORD: https://registry.npmjs.org/@apilayer%2Fmcp-server returns
+      HTTP 404 — the package the provider tells users to npx is not present on the public
+      npm registry as of 2026-09-04. version/published are null for that reason, not because
+      the registry was not queried.
+  - name: geocoder-php/ipstack-provider
+    registry: packagist
+    url: https://packagist.org/packages/geocoder-php/ipstack-provider
+    language: PHP
+    official: false
+    version: 0.5.0
+    published: '2025-02-16'
+    source: https://repo.packagist.org/p2/geocoder-php/ipstack-provider.json (HTTP 200)
+    note: Geocoder PHP community provider; read-only mirror repo.
+  - name: sudiptpa/ipstack
+    registry: packagist
+    url: https://packagist.org/packages/sudiptpa/ipstack
+    language: PHP
+    official: false
+    version: v2.1.0
+    published: '2026-02-20'
+    source: https://repo.packagist.org/p2/sudiptpa/ipstack.json (HTTP 200)
+    note: >-
+      PSR-18 community client. The most actively maintained IPstack client library found in
+      any registry — more recent than the vendor's own SDK.
+  - name: ipstack
+    registry: pypi
+    url: https://pypi.org/project/ipstack/
+    language: Python
+    official: false
+    version: 0.1.4
+    published: '2019-11-26'
+    source: https://pypi.org/pypi/ipstack/json (HTTP 200)
+    note: Community library by Nathan Fiscaletti (github.com/nathan-fiscaletti/ipstackgeo-py).
+  - name: ipstack
+    registry: rubygems
+    url: https://rubygems.org/gems/ipstack
+    language: Ruby
+    official: false
+    version: 0.1.3
+    published: '2019-08-23'
+    source: https://rubygems.org/api/v1/gems/ipstack.json (HTTP 200)
+    note: Community gem by Nathan Pierce (github.com/NorseGaud/ipstack); self-described as unofficial.
+not_found:
+  - registry: npm
+    name: ipstack-sdk
+    status: 404
+    note: Import name used in the provider's own SDK code sample; no such package exists.
+  - registry: npm
+    name: '@apilayer/mcp'
+    status: 404
+  - registry: npm
+    name: apilayer-mcp
+    status: 404

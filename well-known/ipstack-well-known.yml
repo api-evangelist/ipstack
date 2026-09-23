@@ -1,0 +1,105 @@
+generated: '2026-09-19'
+method: probed
+source: 'Direct anonymous HTTPS probes of /.well-known/* on every host this record knows: the registrable
+  domain (ipstack.com) and www, the REST baseURL host (api.ipstack.com), the MCP baseURL host (mcp.apilayer.com),
+  the parent brand host (apilayer.com), the docs host (docs.apilayer.com), and auth.apilayer.com — the
+  third host named in authorization_servers[] by the MCP protected-resource document.'
+name: IPstack .well-known discovery probe
+description: 'Anonymous probe of the standard /.well-known/ discovery paths across every IPstack / APILayer
+  host. Three real documents were served, all of them on the APILayer MCP and auth hosts rather than on
+  ipstack.com itself: an RFC 9728 OAuth protected-resource document at mcp.apilayer.com that names https://auth.apilayer.com
+  as its authorization server, and RFC 8414 / OpenID Connect discovery documents on that auth host. The
+  ipstack.com WordPress site serves no /.well-known/ documents at all.'
+notes:
+- api.ipstack.com answers HTTP 200 with application/json for EVERY path, including every /.well-known/*
+  path — the body is always the API's own {"success":false,"error":{"code":101,"type":"missing_access_key"}}
+  envelope, not a discovery document. Every api.ipstack.com row below is therefore recorded as a MISS
+  despite the 200 status code; a catch-all 200 is not a served document.
+- 'The MCP endpoint''s 401 carries a conformant RFC 9728 challenge header: WWW-Authenticate: Bearer resource_metadata="https://mcp.apilayer.com/.well-known/oauth-protected-resource"'
+- No security.txt is served on any IPstack or APILayer host.
+hosts:
+- host: ipstack.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.ipstack.com
+  documents:
+  - path: /
+    status: 301
+    note: 301 redirect to https://ipstack.com/ — same origin, probed as ipstack.com above.
+- host: api.ipstack.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: NOT a document. Catch-all API error envelope (missing_access_key) returned for every path on
+      this host. Treated as a miss.
+  - path: /.well-known/agent-card.json
+    status: 200
+    note: NOT a document — same catch-all error envelope. Treated as a miss.
+- host: mcp.apilayer.com
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: ipstack-mcp-oauth-protected-resource.json
+    note: Real RFC 9728 OAuth 2.0 Protected Resource Metadata. resource https://mcp.apilayer.com/mcp,
+      authorization_servers ["https://auth.apilayer.com"], scopes_supported ["mcp:read","api:ipstack"],
+      bearer_methods_supported ["header"].
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  path_echo_control: passed
+- host: auth.apilayer.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: ipstack-auth-oauth-authorization-server.json
+    note: Real RFC 8414 Authorization Server Metadata. issuer https://auth.apilayer.com, PKCE S256, dynamic
+      client registration, device code grant, revocation endpoint, scopes_supported includes api:ipstack.
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: ipstack-auth-openid-configuration.json
+    note: OpenID Connect discovery document; byte-identical to the RFC 8414 document above.
+  - path: /.well-known/security.txt
+    status: 404
+  path_echo_control: passed
+- host: apilayer.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: docs.apilayer.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 302
+    note: Every path on the SwaggerHub-hosted docs portal 302s into a SmartBear login loop for anonymous
+      clients. Not a served document.
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.apilayer.com
+    path: /.well-known/oauth-protected-resource
+    file: ipstack-mcp-oauth-protected-resource.json
+  - host: https://auth.apilayer.com
+    path: /.well-known/oauth-authorization-server
+    file: ipstack-auth-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
+note: 'MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s
+  primary hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed
+  and were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'

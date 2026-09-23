@@ -1,0 +1,78 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  https://ipstack.com/pricing/ and https://ipstack.com/faq/ (both HTTP 200) for the
+  documented monthly quotas, plus direct header inspection of a live response from
+  https://api.ipstack.com/ on 2026-09-04 for the runtime signal.
+name: IPstack rate limits and quota signaling
+description: >-
+  IPstack meters by MONTHLY REQUEST QUOTA, not by requests-per-second, and it publishes no
+  runtime rate-limit signal at all. An agent gets no header telling it how much quota is
+  left, no Retry-After when it runs out, and no distinct HTTP status — the same HTTP 200
+  that carries a successful lookup carries the failure.
+limit_count: 4
+limits:
+  - scope: per-account
+    plan: Free
+    window: month
+    limit: 100
+    burst: null
+    source: https://ipstack.com/pricing/
+  - scope: per-account
+    plan: Basic
+    window: month
+    limit: 50000
+    burst: null
+    overage_per_call_usd: 0.0010392
+    source: https://ipstack.com/pricing/
+  - scope: per-account
+    plan: Professional
+    window: month
+    limit: 500000
+    burst: null
+    overage_per_call_usd: 0.00047992
+    source: https://ipstack.com/pricing/
+  - scope: per-account
+    plan: Professional Plus
+    window: month
+    limit: 2000000
+    burst: null
+    overage_per_call_usd: 0.00019998
+    source: https://ipstack.com/pricing/
+per_request_limits:
+  - scope: per-request
+    description: Bulk lookup accepts a maximum of 50 IP addresses in one request.
+    limit: 50
+    source: https://ipstack.com/mcp/
+requests_per_second:
+  documented: false
+  note: >-
+    No per-second or per-minute throttle is published. The FAQ says only that the platform
+    handles "between 2 and 3 billion API requests per day" and was "built to scale almost
+    indefinitely" — a capacity claim, not a client limit.
+response_headers:
+  observed: []
+  x_ratelimit: false
+  ratelimit_draft: false
+  retry_after: false
+  method: probed
+  evidence:
+    url: 'https://api.ipstack.com/134.201.250.155?access_key=<invalid>'
+    http_status: 200
+    headers_returned:
+      - cache-control
+      - content-type
+      - access-control-allow-methods
+      - access-control-allow-origin
+      - x-blocked-at-loadbalancer
+  note: >-
+    CHECKED, NOTHING TO RECORD. Not one rate-limit or quota header was present on a live
+    response. The only quota feedback loop the provider documents is out-of-band: email and
+    dashboard notifications at 75%, 90% and 100% of the monthly allowance.
+status_on_exhaustion:
+  http_status: 200
+  error_type: unknown
+  note: >-
+    Could not be observed without a valid key. Given that every other error condition on
+    this API returns HTTP 200 with success:false, a quota-exhaustion response is very
+    unlikely to carry HTTP 429 — but that is not asserted here, only flagged as unverified.
