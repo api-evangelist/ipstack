@@ -94,3 +94,19 @@ clients_supported:
 docs:
 - https://ipstack.com/mcp/
 - https://docs.apilayer.com/ipstack/docs/mcp-user-guide
+rfc9728:
+  endpoint: https://mcp.apilayer.com/mcp
+  metadata_url: https://mcp.apilayer.com/.well-known/oauth-protected-resource
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.apilayer.com/mcp
+    authorization_servers:
+    - https://auth.apilayer.com
+    scopes_supported:
+    - mcp:read
+    - api:ipstack
+    bearer_methods_supported:
+    - header
