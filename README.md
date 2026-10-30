@@ -1,4 +1,4 @@
-# IPstack (ipstack)
+# IPstack
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,28 +64,119 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Locate and identify website visitors by IP address
+IPstack is an IP geolocation API from APILayer, an Idera, Inc. brand. A single GET request against api.ipstack.com resolves an IPv4 or IPv6 address into more than 100 fields — country, region and city, latitude and longitude, time zone, local currency, ISP, ASN and connection type — plus an optional security module that flags proxies, VPNs, Tor exit nodes and known threat actors. Standard, bulk (up to 50 addresses) and requester lookups are offered in JSON, XML and JSONP. The same data is exposed to agents through APILayer's hosted MCP server at mcp.apilayer.com, which publishes RFC 9728 protected-resource metadata and an OAuth authorization server at auth.apilayer.com.
 
-**APIs.yml:** [apis.yml](apis.yml)
+**Areas:** Geocoding · IP Geolocation · Location · Threat Intelligence · Networking · MCP · Public APIs
 
-## Type
-- **x-type:** company
-- **x-tier:** 3 (bulk-registered from public-apis)
-- **source:** [public-apis/public-apis](https://github.com/public-apis/public-apis) — category: Geocoding
+## IPstack on APIs.io
 
-## API
-- **IPstack** — [Documentation](https://ipstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers)
+Everything profiled for IPstack is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ipstack/](https://apis.io/providers/ipstack/)** — or go straight to one of the APIs or properties below.
 
-## Tags
-Geocoding, Public APIs
+### APIs (2)
 
-## Notes
-This entry was bulk-registered as part of a public-apis catalog sweep on 2026-05-28.
-A real OpenAPI artifact will be added during a follow-up enrichment pass if the provider publishes one.
+- [ipstack REST API](https://apis.io/apis/ipstack/ipstack-rest-api/) — Real-time IP geolocation lookup returning 100+ data fields per IP — country, region and city, latitude/longitude, timezone, currency, connection and ASN…
+- [ipstack MCP Server](https://apis.io/apis/ipstack/ipstack-mcp-server/) — Hosted MCP server exposing the ipstack geolocation lookups as agent-callable tools.
 
-## Timestamps
-- **Created:** 2026-05-28
-- **Modified:** 2026-05-28
+### Published properties
 
-## Maintainers
-- **Kin Lane** — kin@apievangelist.com
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [mcp](https://apis.io/servers/ipstack/mcp/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ipstack Authentication](https://apis.io/security/ipstack/ipstack-authentication/)
+- [Ipstack Domain Security](https://apis.io/security/ipstack/ipstack-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Ipstack Scopes](https://apis.io/scopes/ipstack/ipstack-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ipstack Plans Pricing](https://apis.io/plans/ipstack/ipstack-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ipstack Rate Limits](https://apis.io/rate-limits/ipstack/ipstack-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://ipstack.com/)
+- [Pricing](https://ipstack.com/pricing/)
+- [Sign up](https://dashboard.ipstack.com/signup/free)
+- [Support](https://ipstack.com/contact/)
+- [Blog](https://blog.apilayer.com/feed/)
+- [Terms of service](https://www.ideracorp.com/legal/APILayer)
+- [Privacy policy](https://www.ideracorp.com/Legal/PrivacyPolicy)
+- [GitHub](https://github.com/apilayer)
+- [Status](https://ipstack.com/api-status/)
+
+## API Evangelist rating
+
+**Kin Score 45.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 81.7 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 52.4 |
+| Access clarity | 76.3 |
+
+**Agent readiness 32.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ipstack/](https://apis.io/providers/ipstack/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for IPstack: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ipstack/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
